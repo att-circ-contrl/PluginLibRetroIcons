@@ -1,28 +1,38 @@
-# Open Ephys common library template
-This repository contains a template for building libraries intended to be used by plugins for the [Open Ephys GUI](https://github.com/open-ephys/plugin-GUI). Information on the plugin architecture can be found on [our wiki](https://open-ephys.atlassian.net/wiki/spaces/OEW/pages/950363/Plugin+architecture).
+# Retro Icons Library
 
-## Creating a new library
-1. Rename the "CommonLib" folder to the name the library file will have
-2. Add source files to the Source folder. The existing files can be used as a template
-3. [Create the build files through CMake](https://open-ephys.atlassian.net/wiki/spaces/OEW/pages/1259110401/Plugin+CMake+Builds)
+## Overview
 
-## Using external libraries
-To link the library to other external libraries, it is necessary to manually edit the Build/CMakeLists.txt file. The code for linking libraries is located in comments at the end.
-For most commonly used libraries, the `find_package` option is recommended. An example would be
-```cmake
-find_package(ZLIB)
-target_link_libraries(${COMMONLIB_NAME} ${ZLIB_LIBRARIES})
-target_include_directories(${COMMONLIB_NAME} PRIVATE ${ZLIB_INCLUDE_DIRS})
-````
-If there is no standard package finder for cmake, `find_library`and `find_path` can be used to find the library and include files respectively. The commands will search in a variety of standard locations For example
-```cmake
-find_library(ZMQ_LIBRARIES NAMES libzmq-v120-mt-4_0_4 zmq zmq-v120-mt-4_0_4) #the different names after names are not a list of libraries to include, but a list of possible names the library might have, useful for multiple architectures. find_library will return the first library found that matches any of the names
-find_path(ZMQ_INCLUDE_DIRS zmq.h)
+This library provides self-building JUCE `Image` classes that contain various
+icons and images useful for Open Ephys plugin development.
 
-target_link_libraries(${COMMONLIB_NAME} ${ZMQ_LIBRARIES})
-target_include_directories(${COMMONLIB_NAME} PRIVATE ${ZMQ_INCLUDE_DIRS})
-````
-### Providing libraries for Windows
+To get an image with a specific icon, instantiate the derived class for that
+icon. The constructor takes arguments that let you specify the icon colours.
+
+To make your own custom icons, make a character array with pixel art and pass
+it to one of the base classes' constructors.
+
+## Classes
+
+The library's base classes are derived from JUCE's `Image` class. The
+constructors take a character array with pixel art as one argument, and a
+list or lookup table of colours as additional arguments.
+
+This library provides two base classes:
+* `IconMonochrome` - This is a two-colour image. Pixels specified as `' '` are the background colour; anything else is the foreground colour.
+* `IconPalette` - This is an image with more than two colours. You pass it a lookup table specifying which characters are translated to which colours. Any unrecognized character gets a default colour.
+
+The library's individual icons are derived from these base classes, and
+specify the image's pixel art and dimensions while letting the user specify
+the colours.
+
+The following icon classes are provided:
+* ![Connected16](./Auxiliary/connect16-orange.png) `Connected16Image`
+* ![Disconnected16](./Auxiliary/disconnect16-orange.png) `Disconnected16Image`
+* ![IndicatorLamp16](./Auxiliary/lamp16-yellow-on-blue.png) `IndicatorLamp16Image`
+* ![Wrench16](./Auxiliary/wrench16-blue.png) `Wrench16Image`
+
+## (From Open Ephys's documentation): Providing libraries for Windows
+
 Since Windows does not have standardized paths for libraries, as Linux and macOS do, it is sometimes useful to pack the appropriate Windows version of the required libraries alongside the library files.
 To do so, a *libs* directory has to be created **at the top level** of the repository, alongside this README file, and files from all required libraries placed there. The required folder structure is:
 ```
@@ -36,3 +46,5 @@ To do so, a *libs* directory has to be created **at the top level** of the repos
         └─ x86           #32-bit runtime (.dll) files, if needed
 ```
 DLLs in the bin directories will be copied to the open-ephys GUI *shared* folder when installing.
+
+_(This is the end of the file.)_
