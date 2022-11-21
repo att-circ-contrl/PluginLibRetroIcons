@@ -16,12 +16,12 @@ construction; the generators don't keep track of them.
 
 ## Classes
 
-The generig generator functions take a character array with pixel art as one
+The generic generator functions take a character array with pixel art as one
 argument, and a list or lookup table of colours as additional arguments.
 
 This library provides two generic generator functions:
 * `BuildIconMonochrome` - This constructs a two-colour image. Pixels specified as `' '` are the background colour; anything else is the foreground colour.
-* `BuildIconPalette` - This constructs an image with more than two colours. You pass it a lookup table specifying which characters are translated to which colours. Any unrecognized character gets a default colour.
+* `BuildIconPalette` - This constructs an image with more than two colours. You pass it a lookup table specifying which characters are translated to which colours. Any unrecognized character gets the default colour.
 
 The library's individual icon generators call the generic generators, and
 specify hard-coded image pixel art and dimensions while letting the user
