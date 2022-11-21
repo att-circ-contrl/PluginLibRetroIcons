@@ -2,34 +2,36 @@
 
 ## Overview
 
-This library provides self-building JUCE `Image` classes that contain various
-icons and images useful for Open Ephys plugin development.
+This library provides functions that build JUCE `Image` objects that contain
+various icons and images useful for Open Ephys plugin development.
 
-To get an image with a specific icon, instantiate the derived class for that
+To get an image with a specific icon, call the generator function for that
 icon. The constructor takes arguments that let you specify the icon colours.
 
 To make your own custom icons, make a character array with pixel art and pass
-it to one of the base classes' constructors.
+it to one of the generic generator functions.
+
+You are responsible for deleting the resulting `Image` objects after
+construction; the generators don't keep track of them.
 
 ## Classes
 
-The library's base classes are derived from JUCE's `Image` class. The
-constructors take a character array with pixel art as one argument, and a
-list or lookup table of colours as additional arguments.
+The generig generator functions take a character array with pixel art as one
+argument, and a list or lookup table of colours as additional arguments.
 
-This library provides two base classes:
-* `IconMonochrome` - This is a two-colour image. Pixels specified as `' '` are the background colour; anything else is the foreground colour.
-* `IconPalette` - This is an image with more than two colours. You pass it a lookup table specifying which characters are translated to which colours. Any unrecognized character gets a default colour.
+This library provides two generic generator functions:
+* `BuildIconMonochrome` - This constructs a two-colour image. Pixels specified as `' '` are the background colour; anything else is the foreground colour.
+* `BuildIconPalette` - This constructs an image with more than two colours. You pass it a lookup table specifying which characters are translated to which colours. Any unrecognized character gets a default colour.
 
-The library's individual icons are derived from these base classes, and
-specify the image's pixel art and dimensions while letting the user specify
-the colours.
+The library's individual icon generators call the generic generators, and
+specify hard-coded image pixel art and dimensions while letting the user
+specify the colours.
 
-The following icon classes are provided:
-* ![Connected16](./Auxiliary/connect16-orange.png) `Connected16Image`
-* ![Disconnected16](./Auxiliary/disconnect16-orange.png) `Disconnected16Image`
-* ![IndicatorLamp16](./Auxiliary/lamp16-yellow-on-blue.png) `IndicatorLamp16Image`
-* ![Wrench16](./Auxiliary/wrench16-blue.png) `Wrench16Image`
+The following icon generator functions are provided:
+* ![Connected16](./Auxiliary/connect16-orange.png) `BuildIcon16_Connected`
+* ![Disconnected16](./Auxiliary/disconnect16-orange.png) `BuildIcon16_Disconnected`
+* ![IndicatorLamp16](./Auxiliary/lamp16-yellow-on-blue.png) `BuildIcon16_IndicatorLamp`
+* ![Wrench16](./Auxiliary/wrench16-blue.png) `BuildIcon16_Wrench`
 
 ## (From Open Ephys's documentation): Providing libraries for Windows
 

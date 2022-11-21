@@ -4,22 +4,30 @@ using namespace RetroIcons;
 
 
 //
-// Constructors for base classes.
+// Functions that instantiate arbitrary images.
+// NOTE - These have no bounds checking! Use with caution.
+
+
+namespace RetroIcons
+{
+
 
 // Generic two-colour icon.
 // Pixels with value ' ' are background; anything else is foreground.
 // NOTE - This has no bounds checking! Use with caution.
 
-IconMonochrome::IconMonochrome(int width, int height, const char *pixels, Colour bgcolour, Colour fgcolour) : Image(Image::PixelFormat::ARGB, width, height, true)
+Image* BuildIconMonochrome(int width, int height, const char *pixels, Colour bgcolour, Colour fgcolour)
 {
-    char thischar;
+    Image *result = new Image(Image::PixelFormat::ARGB, width, height, true);
 
     for (int hidx = 0; hidx < width; hidx++)
         for (int vidx = 0; vidx < height; vidx++)
         {
-            thischar = pixels[vidx * width + hidx];
-            setPixelAt( hidx, vidx, (thischar == ' ' ? bgcolour : fgcolour) );
+            char thischar = pixels[vidx * width + hidx];
+            result->setPixelAt( hidx, vidx, (thischar == ' ' ? bgcolour : fgcolour) );
         }
+
+    return result;
 }
 
 
@@ -28,19 +36,25 @@ IconMonochrome::IconMonochrome(int width, int height, const char *pixels, Colour
 // NOTE - This has no bounds checking! Use with caution.
 // NOTE - Passing the map by value lets us build it on the fly in-line using C++11 initialization syntax, if desired.
 
-IconPalette::IconPalette(int width, int height, const char *pixels, Colour defaultcolour, std::map<char,Colour> palette) : Image(Image::PixelFormat::ARGB, width, height, true)
+Image* BuildIconPalette(int width, int height, const char *pixels, Colour defaultcolour, std::map<char,Colour> palette)
 {
-    char thischar;
+    Image *result = new Image(Image::PixelFormat::ARGB, width, height, true);
 
     for (int hidx = 0; hidx < width; hidx++)
         for (int vidx = 0; vidx < height; vidx++)
         {
-            thischar = pixels[vidx * width + hidx];
+            char thischar = pixels[vidx * width + hidx];
             if ( palette.count(thischar) > 0 )
-                setPixelAt( hidx, vidx, palette[thischar] );
+                result->setPixelAt( hidx, vidx, palette[thischar] );
             else
-                setPixelAt( hidx, vidx, defaultcolour );
+                result->setPixelAt( hidx, vidx, defaultcolour );
         }
+
+    return result;
+}
+
+
+// namespace RetroIcons
 }
 
 

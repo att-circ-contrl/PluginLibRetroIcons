@@ -5,12 +5,17 @@ using namespace RetroIcons;
 
 
 //
+// Common constants.
+
+#define ICON16_WIDTH 16
+#define ICON16_HEIGHT 16
+
+
+
+//
 // Wrench image definition.
 
-#define WRENCH16_WIDTH 16
-#define WRENCH16_HEIGHT 16
-
-const char wrench16picture[WRENCH16_WIDTH*WRENCH16_HEIGHT] =
+const char wrench16picture[ICON16_WIDTH*ICON16_HEIGHT] =
 { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
   ' ',' ',' ',' ',' ',' ',' ',' ','#','#','#','#',' ',' ',' ',' ',
   ' ',' ',' ',' ',' ',' ',' ','#','#','#','#',' ',' ',' ',' ',' ',
@@ -32,10 +37,7 @@ const char wrench16picture[WRENCH16_WIDTH*WRENCH16_HEIGHT] =
 //
 // "Connected" image definition.
 
-#define CONN16_WIDTH 16
-#define CONN16_HEIGHT 16
-
-const char connected16picture[CONN16_WIDTH*CONN16_HEIGHT] =
+const char connected16picture[ICON16_WIDTH*ICON16_HEIGHT] =
 { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
   ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
   ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
@@ -60,10 +62,7 @@ const char connected16picture[CONN16_WIDTH*CONN16_HEIGHT] =
 //
 // "Disconnected" image definition.
 
-#define DISCONN16_WIDTH 16
-#define DISCONN16_HEIGHT 16
-
-const char disconnected16picture[DISCONN16_WIDTH*DISCONN16_HEIGHT] =
+const char disconnected16picture[ICON16_WIDTH*ICON16_HEIGHT] =
 { ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
   ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
   ' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',
@@ -88,10 +87,7 @@ const char disconnected16picture[DISCONN16_WIDTH*DISCONN16_HEIGHT] =
 //
 // Indicator lamp image definition.
 
-#define LAMP16_WIDTH 16
-#define LAMP16_HEIGHT 16
-
-const char lamp16picture[LAMP16_WIDTH*LAMP16_HEIGHT] =
+const char lamp16picture[ICON16_WIDTH*ICON16_HEIGHT] =
 { 'b','b','b','b','b','b',' ',' ',' ',' ','b','b','b','b','b','b',
   'b','b','b','b',' ',' ',' ',' ',' ',' ',' ',' ','b','b','b','b',
   'b','b',' ',' ',' ',' ','l','l','l','l',' ',' ',' ',' ','b','b',
@@ -116,23 +112,28 @@ const char lamp16picture[LAMP16_WIDTH*LAMP16_HEIGHT] =
 //
 // Constructors for specific monochrome images.
 
+
+namespace RetroIcons
+{
+
+
 // NOTE - If image dimensions don't match image pixel buffer size, bad things will happen. Use caution.
 
-Wrench16Image::Wrench16Image(Colour bgcolour, Colour fgcolour) : IconMonochrome(WRENCH16_WIDTH, WRENCH16_HEIGHT, wrench16picture, bgcolour, fgcolour)
+Image* BuildIcon16_Wrench(Colour bgcolour, Colour fgcolour)
 {
-    // Nothing else to do.
+    return BuildIconMonochrome(ICON16_WIDTH, ICON16_HEIGHT, wrench16picture, bgcolour, fgcolour);
 }
 
 
-Connected16Image::Connected16Image(Colour bgcolour, Colour fgcolour) : IconMonochrome(CONN16_WIDTH, CONN16_HEIGHT, connected16picture, bgcolour, fgcolour)
+Image* BuildIcon16_Connected(Colour bgcolour, Colour fgcolour)
 {
-    // Nothing else to do.
+    return BuildIconMonochrome(ICON16_WIDTH, ICON16_HEIGHT, connected16picture, bgcolour, fgcolour);
 }
 
 
-Disconnected16Image::Disconnected16Image(Colour bgcolour, Colour fgcolour) : IconMonochrome(DISCONN16_WIDTH, DISCONN16_HEIGHT, disconnected16picture, bgcolour, fgcolour)
+Image* BuildIcon16_Disconnected(Colour bgcolour, Colour fgcolour)
 {
-    // Nothing else to do.
+    return BuildIconMonochrome(ICON16_WIDTH, ICON16_HEIGHT, disconnected16picture, bgcolour, fgcolour);
 }
 
 
@@ -143,11 +144,14 @@ Disconnected16Image::Disconnected16Image(Colour bgcolour, Colour fgcolour) : Ico
 
 // NOTE - We're building maps on the fly using C++11 initializers. This is compact but might not be supported by all compilers.
 
-IndicatorLamp16Image::IndicatorLamp16Image(Colour bgcolour, Colour outlinecolour, Colour lampcolour, Colour highlightcolour)
-    : IconPalette( LAMP16_WIDTH, LAMP16_HEIGHT, lamp16picture, bgcolour,
-        {{' ',outlinecolour},{'l',lampcolour},{'#',highlightcolour}} )
+Image *BuildIcon16_IndicatorLamp(Colour bgcolour, Colour outlinecolour, Colour lampcolour, Colour highlightcolour)
 {
-    // Nothing else to do.
+    return BuildIconPalette( ICON16_WIDTH, ICON16_HEIGHT, lamp16picture, bgcolour,
+        {{' ',outlinecolour},{'l',lampcolour},{'#',highlightcolour}} );
+}
+
+
+// namespace RetroIcons
 }
 
 

@@ -3,38 +3,22 @@
 
 namespace RetroIcons
 {
-	// Monochrome icons.
+	// Functions that instantiate monochrome icons.
 
 	// Settings button image (wrench).
-	class COMMON_LIB Wrench16Image : public IconMonochrome
-	{
-	public:
-		Wrench16Image(Colour bgcolour, Colour fgcolour);
-	};
+	Image* BuildIcon16_Wrench(Colour bgcolour, Colour fgcolour);
 
 	// Connected image (cable).
-	class COMMON_LIB Connected16Image : public IconMonochrome
-	{
-	public:
-		Connected16Image(Colour bgcolour, Colour fgcolour);
-	};
+	Image* BuildIcon16_Connected(Colour bgcolour, Colour fgcolour);
 
 	// Disconnected image (cable).
-	class COMMON_LIB Disconnected16Image : public IconMonochrome
-	{
-	public:
-		Disconnected16Image(Colour bgcolour, Colour fgcolour);
-	};
+	Image* BuildIcon16_Disconnected(Colour bgcolour, Colour fgcolour);
 
 
 	// Palette-based icons.
 
 	// Indicator lamp image.
-	class COMMON_LIB IndicatorLamp16Image : public IconPalette
-	{
-	public:
-		IndicatorLamp16Image(Colour bgcolour, Colour outlinecolour, Colour lampcolour, Colour highlightcolour);
-	};
+	Image* BuildIcon16_IndicatorLamp(Colour bgcolour, Colour outlinecolour, Colour lampcolour, Colour highlightcolour);
 }
 
 #endif
