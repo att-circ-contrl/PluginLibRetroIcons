@@ -11,11 +11,11 @@ namespace RetroIcons
 
 	// Generic two-colour icon.
 	// Pixels with value ' ' are background; anything else is foreground.
-	Image* BuildIconMonochrome(int width, int height, const char *pixels, Colour bgcolour, Colour fgcolour);
+	COMMON_LIB Image* BuildIconMonochrome(int width, int height, const char *pixels, Colour bgcolour, Colour fgcolour);
 
 	// Icon built with a colour lookup table.
 	// Pixels with values found in the lookup table use LUT values. Anything else uses the default.
-	Image* BuildIconPalette(int width, int height, const char *pixels, Colour defaultcolour, std::map<char,Colour> palette);
+	COMMON_LIB Image* BuildIconPalette(int width, int height, const char *pixels, Colour defaultcolour, std::map<char,Colour> palette);
 }
 
 // Specific icon instances.
